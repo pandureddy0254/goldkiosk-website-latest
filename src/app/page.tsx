@@ -80,6 +80,7 @@ export default function Home() {
   const [counterValues, setCounterValues] = useState<number[]>(STATS.map(() => 0));
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [showFooter, setShowFooter] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -266,8 +267,34 @@ export default function Home() {
             <Link href="/partner-with-us" className="nav-link">Partner With Us</Link>
             <Link href="/contact-us" className="nav-link">Contact Us</Link>
           </div>
+          <button
+            className={`hamburger${mobileMenuOpen ? " open" : ""}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span /><span /><span />
+          </button>
         </nav>
       </header>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`mobile-menu-overlay${mobileMenuOpen ? " open" : ""}`} onClick={() => setMobileMenuOpen(false)}>
+        <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+          <div className="mobile-menu-header">
+            <Image src="/logo-gold.png" alt="AI GoldKiosk" width={40} height={40} style={{ objectFit: "contain" }} />
+            <span>AI GOLDKIOSK</span>
+          </div>
+          <div className="mobile-menu-links">
+            <a href="/" className="mobile-menu-link active" onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <Link href="/partner-with-us" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Partner With Us</Link>
+            <Link href="/contact-us" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
+          </div>
+          <div className="mobile-menu-footer">
+            <a href="tel:+18009690506" className="mobile-menu-contact">+1 (800) 969-0506</a>
+            <a href="mailto:partnerships@goldkiosk.com" className="mobile-menu-contact">partnerships@goldkiosk.com</a>
+          </div>
+        </div>
+      </div>
 
       {/* ===== SPLIT LAYOUT: Text Left + Animation Right ===== */}
       <div className="split-layout">

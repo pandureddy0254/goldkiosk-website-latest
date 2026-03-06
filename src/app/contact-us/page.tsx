@@ -57,6 +57,7 @@ export default function ContactUs() {
   const [sortByNearest, setSortByNearest] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<KioskLocation | null>(null);
   const [locatingUser, setLocatingUser] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const countries = useMemo(() => {
     const c = new Set(KIOSK_LOCATIONS.map((l) => l.country));
@@ -129,8 +130,29 @@ export default function ContactUs() {
             <Link href="/partner-with-us" className="nav-link">Partner With Us</Link>
             <Link href="/contact-us" className="nav-link active">Contact Us</Link>
           </div>
+          <button className={`hamburger${mobileMenuOpen ? " open" : ""}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+            <span /><span /><span />
+          </button>
         </nav>
       </header>
+
+      <div className={`mobile-menu-overlay${mobileMenuOpen ? " open" : ""}`} onClick={() => setMobileMenuOpen(false)}>
+        <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+          <div className="mobile-menu-header">
+            <Image src="/logo-gold.png" alt="AI GoldKiosk" width={40} height={40} style={{ objectFit: "contain" }} />
+            <span>AI GOLDKIOSK</span>
+          </div>
+          <div className="mobile-menu-links">
+            <Link href="/" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link href="/partner-with-us" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Partner With Us</Link>
+            <Link href="/contact-us" className="mobile-menu-link active" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
+          </div>
+          <div className="mobile-menu-footer">
+            <a href="tel:+18009690506" className="mobile-menu-contact">+1 (800) 969-0506</a>
+            <a href="mailto:support@goldkiosk.com" className="mobile-menu-contact">support@goldkiosk.com</a>
+          </div>
+        </div>
+      </div>
 
       {/* Hero with banner */}
       <section className="subpage-hero" style={{ backgroundImage: "url(/banner-contact.jpg)", backgroundSize: "cover", backgroundPosition: "center" }}>
